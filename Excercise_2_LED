@@ -1,0 +1,70 @@
+# Import necessary libraries
+import time
+import board
+
+# Check if a specific library is present; else import another library
+if hasattr(board, "APA102_SCK"):
+    import adafruit_dotstar
+    led = adafruit_dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1)
+else:
+    import neopixel
+    led = neopixel.NeoPixel(board.NEOPIXEL, 1)
+
+# Set brightness and start with solid green color
+led.brightness = 1
+led[0] = (0, 255, 0)  # Solid green (peace)
+
+# Gradually fade green (representing fading peace)
+for j in range(0, 245, 5):
+    led[0] = (0, 255 - j, 0)
+    time.sleep(0.1)
+
+# Stabilize at faint green (decreased peace)
+led[0] = (0, 10, 0)
+time.sleep(1)
+
+# Faint green heartbeat effect (turmoil)
+for i in range(10):
+    led[0] = (0, 10, 0)
+    time.sleep(0.1)
+    led[0] = (0, 0, 0)  # Turn off
+    time.sleep(0.5)
+
+# Transition from faint green to red (peaked conflict)
+for w in range(11):
+    led[0] = (w, 10 - w, 0)
+    time.sleep(0.1)
+    led[0] = (0, 0, 0)
+    time.sleep(0.5)
+
+# Gradually intensify red beat (hardship)
+for redbeat in range(0, 100, 10):
+    led[0] = (10 + redbeat, 0, 0)
+    time.sleep(0.1)
+    led[0] = (0, 0, 0)
+    time.sleep(0.2)
+    
+# Gradually decrease the intensity of the red beat (Going through it)
+for k in range(0, 100, 10):
+    led[0] = (110-k, 0, 0)
+    time.sleep(0.1)
+    led[0] = (0, 0, 0)
+    time.sleep(0.5)
+
+# Transition back to green (peace returns)
+for transitiontopeace in range(0, 100, 20):
+    led[0] = (0, transitiontopeace, 0)
+    time.sleep(0.1)
+    led[0] = (0, 0, 0)
+    time.sleep(0.3)
+
+# Slow down beats and stabilize to solid green
+for finalpeace in range(0, 140, 20):
+    led[0] = (0, 110 + finalpeace, 0)
+    time.sleep(0.5)
+    led[0] = (0, 0, 0)
+    time.sleep(0.5)
+
+# Final solid green (peace stabilized)
+led[0] = (0, 250, 0)
+time.sleep(5)
